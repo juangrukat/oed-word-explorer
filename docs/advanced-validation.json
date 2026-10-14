@@ -1,0 +1,47 @@
+{
+  "unit_tests_passed": 19,
+  "skipped_test": "Source-disc decoder regression; original disc is unmounted and decoder unchanged.",
+  "phonetic_index": {
+    "valid_pronunciation_entries": 112797,
+    "pronunciation_forms": 134203,
+    "strict_rhyme_forms": 132021,
+    "unsupported_forms": 27730,
+    "unsupported_examples": {
+      "-æ-": 1097,
+      "riː-": 366,
+      "træns-": 175,
+      "-ɔː-": 162,
+      "-nz-": 129,
+      "æ-": 70,
+      "ps-": 67,
+      "-ɪn": 64,
+      "-s": 61,
+      "træn-": 60,
+      "-aɪn": 55,
+      "stress variable": 53,
+      "daɪ-": 49,
+      "ˈtræns-": 43,
+      "-aɪl": 41,
+      "ɛn-": 41,
+      "-iːn": 37,
+      "-græf": 37,
+      "hɪpəʊ-": 36,
+      "see prec.": 35
+    },
+    "grammar_rows": 472582,
+    "corpus_sha256": "4795d7a91c8e9096514c5d15df0aa5150c5b3007efe1d9494c34bd65dd1df817"
+  },
+  "browser_checks": [
+    "noun-only exact rhymes",
+    "read pronunciation selection",
+    "saved pronunciation restored after reload",
+    "responsive stacked controls with no horizontal overflow",
+    "active filter chips"
+  ],
+  "scope_limits": [
+    "Recorded pronunciation only; no generated or inherited forms.",
+    "Unresolved legacy symbols and partial transcriptions are excluded.",
+    "Part of speech requires explicit source labels.",
+    "Approximate sound searches use bounded phoneme rankings; syllables are estimated."
+  ]
+}

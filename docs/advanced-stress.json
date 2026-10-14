@@ -1,0 +1,71 @@
+{
+  "requests": 56,
+  "concurrency": 8,
+  "errors": 0,
+  "median_seconds": 0.056,
+  "p95_seconds": 0.786,
+  "max_seconds": 0.947,
+  "examples": [
+    {
+      "case": {
+        "q": "light",
+        "mode": "rhyme",
+        "pos": "noun"
+      },
+      "seconds": 0.062,
+      "results": 40
+    },
+    {
+      "case": {
+        "q": "nation",
+        "mode": "rhyme",
+        "syllables": "2",
+        "stress": "10"
+      },
+      "seconds": 0.072,
+      "results": 8
+    },
+    {
+      "case": {
+        "q": "cat",
+        "mode": "near-rhyme"
+      },
+      "seconds": 0.843,
+      "results": 40
+    },
+    {
+      "case": {
+        "q": "light",
+        "mode": "sounds-like"
+      },
+      "seconds": 0.561,
+      "results": 40
+    },
+    {
+      "case": {
+        "q": "lament*",
+        "pos": "verb"
+      },
+      "seconds": 0.426,
+      "results": 1
+    },
+    {
+      "case": {
+        "q": "poem mourning",
+        "mode": "definitions",
+        "pos": "noun"
+      },
+      "seconds": 0.947,
+      "results": 40
+    },
+    {
+      "case": {
+        "q": "read",
+        "mode": "rhyme"
+      },
+      "seconds": 0.055,
+      "results": 0
+    }
+  ],
+  "read_variant_checks": "Both /riːd/→reed and /rɛd/→red pass."
+}

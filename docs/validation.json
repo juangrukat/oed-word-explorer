@@ -1,0 +1,127 @@
+{
+  "counts": {
+    "entries": 291588,
+    "headwords": 458800,
+    "senses": 777030,
+    "references": 476587,
+    "quotations": 2435558,
+    "obscure_senses": 196440,
+    "literary_candidates": 37317
+  },
+  "source_samples_verified": 22,
+  "checks": [
+    {
+      "check": "headword",
+      "query": "A",
+      "first_match": "A"
+    },
+    {
+      "check": "headword",
+      "query": "zyxt",
+      "first_match": "zyxt"
+    },
+    {
+      "check": "headword",
+      "query": "lament",
+      "first_match": "lament"
+    },
+    {
+      "check": "headword",
+      "query": "litotes",
+      "first_match": "litotes"
+    },
+    {
+      "check": "headword",
+      "query": "zeugma",
+      "first_match": "zeugma"
+    },
+    {
+      "check": "headword",
+      "query": "repetition",
+      "first_match": "repetition"
+    },
+    {
+      "check": "headword",
+      "query": "A1",
+      "first_match": "A 1"
+    },
+    {
+      "check": "named_reference_resolution",
+      "exact_headword_matches": 465193,
+      "named_references": 476587,
+      "note": "Matching the headword does not resolve all homonym or sense ambiguity."
+    },
+    {
+      "check": "literary_discovery",
+      "query": "rhetorical repetition",
+      "top_results": [
+        "polyptoton",
+        "stichomythia",
+        "gemination",
+        "traduction",
+        "or",
+        "more"
+      ]
+    },
+    {
+      "check": "expanded_idea_search",
+      "query": "poem mourning",
+      "top_results": [
+        "wept",
+        "site",
+        "rune",
+        "ˌthrenothriˈambics",
+        "elegy",
+        "chantepleure",
+        "deploration",
+        "poem",
+        "elegiac",
+        "rune",
+        "hearse-like",
+        "poetry"
+      ]
+    },
+    {
+      "check": "obscure_from_selected_sense",
+      "headword": "lament",
+      "sense": "2",
+      "top_results": [
+        "dolour",
+        "dole",
+        "moanful",
+        "mourn",
+        "trental",
+        "rune",
+        "coronach",
+        "lamentful",
+        "eˈlegious",
+        "ruth"
+      ]
+    },
+    {
+      "check": "variant_label_scope",
+      "headword": "dirge",
+      "sense": "2",
+      "labels": [
+        "transf.",
+        "fig."
+      ]
+    }
+  ],
+  "automated_unit_tests": 11,
+  "browser_checks": [
+    "headword search",
+    "entry navigation",
+    "sense selection",
+    "obscure filter",
+    "desktop layout",
+    "phone layout without horizontal overflow",
+    "no browser console errors"
+  ],
+  "limitations": [
+    "Text-based inferred connections are not verified synonyms.",
+    "Named references may retain homonym and sense ambiguity; relative references are retained in source text.",
+    "Unmapped special symbols are visibly preserved.",
+    "No independent comparison against the legacy Windows application runtime."
+  ]
+}

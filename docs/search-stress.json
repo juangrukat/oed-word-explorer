@@ -1,0 +1,442 @@
+{
+  "correctness_patterns": 71,
+  "oracle_headword_rows": 458800,
+  "correctness": [
+    {
+      "pattern": "la?ent*",
+      "matching_entries_or_subentries": 25,
+      "returned": 25,
+      "seconds": 0.0354
+    },
+    {
+      "pattern": "lam?nt*",
+      "matching_entries_or_subentries": 20,
+      "returned": 20,
+      "seconds": 0.0549
+    },
+    {
+      "pattern": "lament*",
+      "matching_entries_or_subentries": 19,
+      "returned": 19,
+      "seconds": 0.0221
+    },
+    {
+      "pattern": "?ament",
+      "matching_entries_or_subentries": 5,
+      "returned": 5,
+      "seconds": 0.0389
+    },
+    {
+      "pattern": "*lament*",
+      "matching_entries_or_subentries": 59,
+      "returned": 40,
+      "seconds": 0.1772
+    },
+    {
+      "pattern": "?",
+      "matching_entries_or_subentries": 82,
+      "returned": 40,
+      "seconds": 0.0317
+    },
+    {
+      "pattern": "*",
+      "matching_entries_or_subentries": 431601,
+      "returned": 40,
+      "seconds": 0.511
+    },
+    {
+      "pattern": "**",
+      "matching_entries_or_subentries": 431601,
+      "returned": 40,
+      "seconds": 0.1073
+    },
+    {
+      "pattern": "???",
+      "matching_entries_or_subentries": 7471,
+      "returned": 40,
+      "seconds": 0.0349
+    },
+    {
+      "pattern": "*ing",
+      "matching_entries_or_subentries": 22407,
+      "returned": 40,
+      "seconds": 0.0474
+    },
+    {
+      "pattern": "A?",
+      "matching_entries_or_subentries": 64,
+      "returned": 40,
+      "seconds": 0.0227
+    },
+    {
+      "pattern": "a??",
+      "matching_entries_or_subentries": 248,
+      "returned": 40,
+      "seconds": 0.0238
+    },
+    {
+      "pattern": "*?*",
+      "matching_entries_or_subentries": 431601,
+      "returned": 40,
+      "seconds": 0.107
+    },
+    {
+      "pattern": "*tion",
+      "matching_entries_or_subentries": 7539,
+      "returned": 40,
+      "seconds": 0.0384
+    },
+    {
+      "pattern": "%",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0211
+    },
+    {
+      "pattern": "_",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0212
+    },
+    {
+      "pattern": "\\",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.021
+    },
+    {
+      "pattern": "la$ent*",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0207
+    },
+    {
+      "pattern": "' OR 1=1 --",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0209
+    },
+    {
+      "pattern": "[abc]*",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0209
+    },
+    {
+      "pattern": "ÉLÉG*",
+      "matching_entries_or_subentries": 22,
+      "returned": 22,
+      "seconds": 0.0225
+    },
+    {
+      "pattern": "LAMENT*",
+      "matching_entries_or_subentries": 19,
+      "returned": 19,
+      "seconds": 0.0213
+    },
+    {
+      "pattern": "nonexistentzzzz*",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0208
+    },
+    {
+      "pattern": "************************************************************************************************************************************************************************************************************************************************************************************************************",
+      "matching_entries_or_subentries": 431601,
+      "returned": 40,
+      "seconds": 0.19
+    },
+    {
+      "pattern": "????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????",
+      "matching_entries_or_subentries": 0,
+      "returned": 0,
+      "seconds": 0.0286
+    },
+    {
+      "pattern": "*?*?*?*?*?*?*?",
+      "matching_entries_or_subentries": 342513,
+      "returned": 40,
+      "seconds": 0.0998
+    },
+    {
+      "pattern": "t?*",
+      "matching_entries_or_subentries": 27096,
+      "returned": 40,
+      "seconds": 0.0301
+    },
+    {
+      "pattern": "profe*",
+      "matching_entries_or_subentries": 55,
+      "returned": 40,
+      "seconds": 0.0227
+    },
+    {
+      "pattern": "d?sconce*",
+      "matching_entries_or_subentries": 12,
+      "returned": 12,
+      "seconds": 0.0219
+    },
+    {
+      "pattern": "?q*",
+      "matching_entries_or_subentries": 1083,
+      "returned": 40,
+      "seconds": 0.0265
+    },
+    {
+      "pattern": "un*",
+      "matching_entries_or_subentries": 12769,
+      "returned": 40,
+      "seconds": 0.0287
+    },
+    {
+      "pattern": "curre?*",
+      "matching_entries_or_subentries": 20,
+      "returned": 20,
+      "seconds": 0.0214
+    },
+    {
+      "pattern": "vo*",
+      "matching_entries_or_subentries": 885,
+      "returned": 40,
+      "seconds": 0.024
+    },
+    {
+      "pattern": "pance*",
+      "matching_entries_or_subentries": 3,
+      "returned": 3,
+      "seconds": 0.0218
+    },
+    {
+      "pattern": "?u*",
+      "matching_entries_or_subentries": 32921,
+      "returned": 40,
+      "seconds": 0.0324
+    },
+    {
+      "pattern": "ph?llo*",
+      "matching_entries_or_subentries": 81,
+      "returned": 40,
+      "seconds": 0.0227
+    },
+    {
+      "pattern": "in*",
+      "matching_entries_or_subentries": 9485,
+      "returned": 40,
+      "seconds": 0.0272
+    },
+    {
+      "pattern": "se?.*",
+      "matching_entries_or_subentries": 4,
+      "returned": 4,
+      "seconds": 0.0226
+    },
+    {
+      "pattern": "k?*",
+      "matching_entries_or_subentries": 4919,
+      "returned": 40,
+      "seconds": 0.0236
+    },
+    {
+      "pattern": "in*",
+      "matching_entries_or_subentries": 9485,
+      "returned": 40,
+      "seconds": 0.0253
+    },
+    {
+      "pattern": "poly?sopre*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0226
+    },
+    {
+      "pattern": "ki*",
+      "matching_entries_or_subentries": 1204,
+      "returned": 40,
+      "seconds": 0.0234
+    },
+    {
+      "pattern": "?aporary*",
+      "matching_entries_or_subentries": 2,
+      "returned": 2,
+      "seconds": 0.0239
+    },
+    {
+      "pattern": "da*",
+      "matching_entries_or_subentries": 1548,
+      "returned": 40,
+      "seconds": 0.0237
+    },
+    {
+      "pattern": "produ?ergo*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0218
+    },
+    {
+      "pattern": "musquet(t)e?r*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0213
+    },
+    {
+      "pattern": "wal?*",
+      "matching_entries_or_subentries": 464,
+      "returned": 40,
+      "seconds": 0.0234
+    },
+    {
+      "pattern": "h?pocraterifor*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0213
+    },
+    {
+      "pattern": "ne*",
+      "matching_entries_or_subentries": 2431,
+      "returned": 40,
+      "seconds": 0.0248
+    },
+    {
+      "pattern": "mu*",
+      "matching_entries_or_subentries": 2859,
+      "returned": 40,
+      "seconds": 0.0241
+    },
+    {
+      "pattern": "g?atulanc*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0215
+    },
+    {
+      "pattern": "fl*",
+      "matching_entries_or_subentries": 2828,
+      "returned": 40,
+      "seconds": 0.0246
+    },
+    {
+      "pattern": "bl*",
+      "matching_entries_or_subentries": 2173,
+      "returned": 40,
+      "seconds": 0.025
+    },
+    {
+      "pattern": "sui*",
+      "matching_entries_or_subentries": 104,
+      "returned": 40,
+      "seconds": 0.0229
+    },
+    {
+      "pattern": "y?lp*",
+      "matching_entries_or_subentries": 9,
+      "returned": 9,
+      "seconds": 0.0228
+    },
+    {
+      "pattern": "ni?*",
+      "matching_entries_or_subentries": 1250,
+      "returned": 40,
+      "seconds": 0.025
+    },
+    {
+      "pattern": "susu*",
+      "matching_entries_or_subentries": 14,
+      "returned": 14,
+      "seconds": 0.0207
+    },
+    {
+      "pattern": "?-l*",
+      "matching_entries_or_subentries": 69,
+      "returned": 40,
+      "seconds": 0.0246
+    },
+    {
+      "pattern": "s?*",
+      "matching_entries_or_subentries": 53828,
+      "returned": 40,
+      "seconds": 0.0343
+    },
+    {
+      "pattern": "pewter-ca?e*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0225
+    },
+    {
+      "pattern": "uns?s*",
+      "matching_entries_or_subentries": 34,
+      "returned": 34,
+      "seconds": 0.0228
+    },
+    {
+      "pattern": "?cu*",
+      "matching_entries_or_subentries": 512,
+      "returned": 40,
+      "seconds": 0.0253
+    },
+    {
+      "pattern": "re?lic*",
+      "matching_entries_or_subentries": 29,
+      "returned": 29,
+      "seconds": 0.0233
+    },
+    {
+      "pattern": "sea-?hears*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.022
+    },
+    {
+      "pattern": "meda?lionpatte*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0225
+    },
+    {
+      "pattern": "illaq*",
+      "matching_entries_or_subentries": 5,
+      "returned": 5,
+      "seconds": 0.0215
+    },
+    {
+      "pattern": "u?*",
+      "matching_entries_or_subentries": 15170,
+      "returned": 40,
+      "seconds": 0.0272
+    },
+    {
+      "pattern": "?lutinant*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0226
+    },
+    {
+      "pattern": "trochelmi?*",
+      "matching_entries_or_subentries": 1,
+      "returned": 1,
+      "seconds": 0.0221
+    },
+    {
+      "pattern": "capem*",
+      "matching_entries_or_subentries": 2,
+      "returned": 2,
+      "seconds": 0.0229
+    },
+    {
+      "pattern": "raio?*",
+      "matching_entries_or_subentries": 2,
+      "returned": 2,
+      "seconds": 0.0226
+    }
+  ],
+  "concurrent_http": {
+    "requests": 96,
+    "workers": 8,
+    "errors": 0,
+    "elapsed_seconds": 0.867,
+    "median_seconds": 0.047,
+    "p95_seconds": 0.172,
+    "max_seconds": 0.222
+  },
+  "phonetic_search": "Phonetic and grammar load checks are recorded separately in docs/advanced-stress.json."
+}

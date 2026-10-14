@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OED · Word connections</title><link rel="stylesheet" href="/style.css"><script defer src="/app.js"></script>
+</head>
+<body>
+<header><a class="brand" href="/">OED<span>SECOND EDITION · PRIVATE LIBRARY</span></a><span class="edition">A word is a beginning.</span></header>
+<main>
+<section class="research-intro"><p class="eyebrow">YOUR PRIVATE WORD LIBRARY</p><h1>Meanings, sounds, connections.</h1><p>Follow a meaning. Find a rhyme. Discover a forgotten word.</p></section>
+<section class="search-panel" aria-label="Dictionary search">
+<form id="search-form"><label for="query" id="query-label">A headword or an idea</label><div class="search-row"><input id="query" name="query" type="search" placeholder="lament, elegy, a poem of mourning…" autocomplete="off" required maxlength="300" aria-describedby="query-help"><button type="submit">Explore <span aria-hidden="true">→</span></button></div>
+<p id="query-help" class="small muted">Headword patterns: ? matches one character; * matches any number.</p>
+<details id="advanced-panel"><summary>Advanced search <span id="advanced-count" class="small muted"></span></summary><div class="advanced-grid">
+<fieldset><legend>Search method</legend><label for="mode">Find by</label><select id="mode"><option value="headword">Headword / pattern</option><option value="definitions">Definitions / ideas</option><option value="quotations">Historical quotations</option><option value="rhyme">Exact rhymes</option><option value="near-rhyme">Near rhymes</option><option value="sounds-like">Similar pronunciation</option></select>
+<div class="sound-controls" hidden><label for="input-type">Sound input</label><select id="input-type"><option value="word">A recorded word</option><option value="ipa">IPA pronunciation</option></select><p class="small muted">Near rhymes explores approximate endings beyond exact rhymes. Similar pronunciation compares the whole recorded form.</p></div></fieldset>
+<fieldset><legend>Word properties</legend><label for="pos">Part of speech</label><select id="pos"><option value="any">Any part of speech</option><option value="noun">Noun</option><option value="verb">Verb</option><option value="adjective">Adjective</option><option value="adverb">Adverb</option><option value="pronoun">Pronoun</option><option value="preposition">Preposition</option><option value="conjunction">Conjunction</option><option value="interjection">Interjection</option><option value="affix">Prefix / suffix</option><option value="phrase">Phrase</option><option value="participle">Participle</option><option value="unlabelled">Unlabelled grammar</option></select><p class="small muted">Filters use recorded grammar. Entries without a label remain available under Any or Unlabelled.</p>
+<div class="sound-controls sound-properties" hidden><label for="syllables">Syllables (estimated)</label><input id="syllables" type="number" min="1" max="16" placeholder="Any"><label for="stress">Stress pattern</label><input id="stress" maxlength="16" pattern="[012?]+" placeholder="Any, or 010"><p class="small muted">0 unstressed · 1 main stress · 2 secondary · ? any. Counts follow the recorded pronunciation.</p></div></fieldset>
+<fieldset><legend>Usage</legend><label class="check-label"><input id="literary" type="checkbox"> Literary candidates</label><label class="check-label"><input id="obscure" type="checkbox"> Obsolete, rare &amp; dialectal</label><button type="button" id="reset-filters" class="subtle-button">Reset filters</button></fieldset>
+</div></details><div id="active-filters" aria-label="Active search filters"></div>
+<div id="pronunciation-area" hidden><label for="pronunciation">Recorded pronunciation to explore</label><select id="pronunciation"><option value="">Choose a pronunciation…</option></select><p id="pronunciation-help" class="small muted"></p></div>
+</form>
+<div class="examples"><span>BEGIN WITH</span><button data-example="lament">lament</button><button data-example="zeugma">zeugma</button><button data-example="poem mourning" data-mode="definitions">poem of mourning</button><button data-example="silence" data-mode="definitions" data-obscure="1">forgotten words for silence</button></div>
+<p id="corpus-status" class="small muted">Loading your library…</p></section>
+<div id="status" role="status" aria-live="polite"></div>
+<div class="workspace"><section id="results-panel" class="results-panel" aria-label="Search results"><div class="section-heading"><h2 id="results-title">Your next discovery</h2><span id="result-count"></span></div><div id="results"><div class="empty"><span class="ornament" aria-hidden="true">✦</span><h3>Start with something familiar.</h3><p>Choose a headword, or switch to definitions to search for an idea. Use <code>*</code> and <code>?</code> for headword wildcards.</p></div></div></section><section id="entry-panel" class="entry-panel" aria-label="Dictionary entry" hidden></section></div>
+</main>
+<footer><span>Oxford English Dictionary · Second Edition</span><span>Dictionary evidence first. Inferred connections clearly marked.</span></footer>
+</body></html>

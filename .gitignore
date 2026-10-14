@@ -1,0 +1,8 @@
+data/
+__pycache__/
+*.pyc
+research/samples/
+research/failing-block.bin
+*.iso
+*.DAT
+.DS_Store
