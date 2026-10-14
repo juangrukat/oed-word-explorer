@@ -73,6 +73,10 @@ has no account system and is intended for your trusted private network.
 - **Choose a sense:** connections update for the selected meaning. Explicit
   references, subentries, inferred similarities, and incoming references are
   presented separately. Inferred suggestions name the shared definition terms.
+- **Subentry context:** selecting a derived word shows its parent definition and
+  source examples. Subentries without a separate definition are explicitly
+  identified. Following quotations are included only when adjacent in the source
+  and explicitly mentioning the selected word.
 - **Inspect evidence:** read definitions, etymology, quotations, full references,
   and the original SGML. Entry URLs bookmark the selected sense and search.
 

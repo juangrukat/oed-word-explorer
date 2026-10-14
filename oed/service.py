@@ -10,6 +10,7 @@ from pathlib import Path
 from .markup import entry_data, clean, normalize, words
 from .advanced import Advanced, POS, SOUND_MODES
 from .sound_search import sound_search
+from .subentries import contexts
 
 STOP = set('''the and for that with this from are was were been being have has had not but which
 who whom whose into its their his her our your you they them these those such some any
@@ -259,6 +260,9 @@ class Dictionary:
                 f.seek(entry_id)
                 raw=f.read(row['source_length']).decode('ascii')
             data=entry_data(raw,entry_id)
+            sub_context=contexts(data['tree'],data['senses'])
+            for sense in result['senses']:
+                if sense['id'] in sub_context:sense['subentry_context']=sub_context[sense['id']]
             result['etymologies']=[clean(n) for n in data['tree'].walk() if n.tag in {'et','etym'}]
             result['quotation_total']=c.execute('SELECT count(*) FROM quotations WHERE entry_id=?',(entry_id,)).fetchone()[0]
             result['quotations']=[r['text'] for r in c.execute('SELECT text FROM quotations WHERE entry_id=? LIMIT 40',(entry_id,))]
