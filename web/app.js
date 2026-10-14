@@ -3,7 +3,7 @@ const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const soundModes=new Set(['rhyme','near-rhyme','sounds-like']);
 const modeNames={headword:'Headwords',definitions:'Definitions / ideas',quotations:'Quotations',rhyme:'Exact rhymes','near-rhyme':'Near rhymes','sounds-like':'Similar pronunciation'};
-const state = {entry:null, sense:null, searchSeq:0, entrySeq:0, relatedSeq:0, quotationOffset:0, connObscure:false, connLiterary:false};
+const state = {searchOffset:0, entry:null, sense:null, searchSeq:0, entrySeq:0, relatedSeq:0, quotationOffset:0, connObscure:false, connLiterary:false};
 const status = (message, error=false) => {$('#status').textContent=message; $('#status').classList.toggle('error',error);};
 async function api(path, params={}) {
   const response = await fetch(path+'?'+new URLSearchParams(params));
@@ -57,7 +57,7 @@ function renderPronunciations(data,params) {
   $('#pronunciation-help').textContent=data.needs_pronunciation?'This word has several recorded forms. Choose one to see its sound matches.':'Matches use this recorded pronunciation; optional segments may yield more than one form.';
 }
 function entryLink(id,sense) {
-  const p=new URLSearchParams(searchParams()); p.set('entry',String(id));
+  const p=new URLSearchParams(searchParams()); if(state.searchOffset)p.set('offset',state.searchOffset); p.set('entry',String(id));
   if (sense) p.set('sense',sense);
   return '#'+p.toString();
 }
@@ -69,9 +69,33 @@ function resultCard(result,inferred=false) {
   const soundEvidence=phone?`<span class="sound-evidence">/${esc(phone.ipa)}/ <span class="small muted">· ${phone.syllables} syllable${phone.syllables===1?'':'s'}${phone.stress?' · stress '+esc(phone.stress):''}</span></span>`:'';
   return `<a class="result-card ${state.entry?.id===id?'active':''}" href="${esc(entryLink(id,sense))}"><div class="result-head"><strong>${esc(result.headword)}</strong><span class="pos">${esc(result.pos)} ${esc(result.homonym)}</span></div>${badges(result.labels,inferred)}${soundEvidence}<p>${esc(excerpt(result.definition||''))}</p>${support}<div class="reason">${esc(result.explanation||result.connection||'Dictionary reference')}</div></a>`;
 }
-async function search(updateHash=true) {
+function highlightedIPA(ipa,ending) {
+  if(!ending || !ipa.endsWith(ending))return '/'+esc(ipa)+'/';
+  return '/'+esc(ipa.slice(0,-ending.length))+'<mark>'+esc(ending)+'</mark>/';
+}
+function soundGroup(result,mode) {
+  const entries=new Map();
+  for(const variant of result.variants||[result]){if(!entries.has(variant.id))entries.set(variant.id,{...variant,phones:[]});entries.get(variant.id).phones.push(variant.phonetic_match);}
+  const variants=[...entries.values()];
+  return `<article class="sound-group"><h3>${esc(result.headword)} <span class="small muted">${result.entry_count||1} matching dictionary entr${result.entry_count===1?'y':'ies'}</span></h3>${variants.map(v=>{
+    const phone=v.phonetic_match;
+    const ipa=highlightedIPA(phone.ipa,mode==='sounds-like'?'':phone.ending);
+    const hint=phone.homophone?`Same recorded pronunciation as <strong>${esc(phone.homophone)}</strong>. `:'';
+    const why=mode==='rhyme'?`Shares ${phone.ending_hint?esc(phone.ending_hint)+' ':''}<strong>/${esc(phone.ending)}/</strong> with your selected pronunciation.`:esc(v.explanation);
+    return `<a class="result-card sound-card ${state.entry?.id===v.id?'active':''}" href="${esc(entryLink(v.id))}"><div class="result-head"><span class="pos">${esc(v.pos)} ${v.homonym?' · dictionary entry '+esc(v.homonym):''}</span></div><p class="pronunciation-line"><strong>Pronunciation:</strong> ${ipa}</p>${v.phones.slice(1).map(p=>`<p class="pronunciation-line"><strong>Also matches:</strong> ${highlightedIPA(p.ipa,mode==='sounds-like'?'':p.ending)}${p.homophone?' · same recorded pronunciation as '+esc(p.homophone):''}</p>`).join('')}${hint?`<p class="pronunciation-hint">${hint}</p>`:''}${badges(v.usage_labels)}<p><strong>Meaning:</strong> ${esc(excerpt(v.definition,300))}</p><p class="rhyme-reason"><strong>${mode==='rhyme'?'Why it rhymes':'Why it matches'}:</strong> ${why}</p><span class="small muted">${phone.syllables} syllable${phone.syllables===1?'':'s'}${phone.optional?' · recorded optional sound variant':''} · Open this dictionary entry →</span></a>`;
+  }).join('')}</article>`;
+}
+function soundSummary(data,params) {
+  const selected=data.selected_pronunciation, summary=data.sound_summary;
+  if(!selected || !summary)return '';
+  const exact=params.mode==='rhyme';
+  return `<div class="sound-summary"><h3>${esc(modeNames[params.mode])} ${params.input==='ipa'?'for':'for '+esc(params.q)}</h3><p>Selected pronunciation: <strong>${highlightedIPA(selected.ipa,exact?summary.ending:'')}</strong></p>${exact?`<p>Matching ending: <strong>${summary.ending_hint?esc(summary.ending_hint)+' · ':''}/${esc(summary.ending)}/</strong>. The highlighted sounds rhyme; spelling can differ completely.</p>`:'<p>These are approximate sound matches. Each card shows the pronunciation actually compared.</p>'}<p class="small muted">Historical, dialectal and obscure words are included. Usage labels describe the dictionary entry and may concern individual senses.</p></div>`;
+}
+async function search(updateHash=true,offset=0) {
+
   updateSettings();
   const params=searchParams(); if (!params.q) return;
+  if(soundModes.has(params.mode)){params.offset=String(offset);state.searchOffset=offset;}else state.searchOffset=0;
   const seq=++state.searchSeq;
   $('#search-form button[type="submit"]').disabled=true;
   status('Searching your dictionary…');
@@ -80,8 +104,14 @@ async function search(updateHash=true) {
     const data=await api('/api/search',params); if(seq!==state.searchSeq) return;
     renderPronunciations(data,params);
     $('#results-title').textContent=modeNames[params.mode]||'Results';
-    $('#result-count').textContent=data.results.length+(data.results.length===40?' shown':' results');
-    $('#results').innerHTML=data.needs_pronunciation?'<div class="empty"><h3>Choose a pronunciation above.</h3><p>Each form can have different rhymes.</p></div>':data.results.length?data.results.map(x=>resultCard(x)).join(''):'<div class="empty"><h3>No matches in this view.</h3><p>Try fewer words, switch to definitions, or remove a filter.</p></div>';
+    $('#result-count').textContent=data.total!==undefined?`${data.total} words · ${data.results.length?Number(data.offset)+1:0}–${Number(data.offset)+data.results.length} shown`:data.results.length+(data.results.length===40?' shown':' results');
+    $('#results').innerHTML=data.needs_pronunciation?'<div class="empty"><h3>Choose a pronunciation above.</h3><p>Each form can have different rhymes.</p></div>':data.results.length?soundSummary(data,params)+data.results.map(x=>x.variants?soundGroup(x,params.mode):resultCard(x)).join(''):'<div class="empty"><h3>No matches in this view.</h3><p>Try fewer words, switch to definitions, or remove a filter.</p></div>';
+    if(data.total!==undefined && (offset>0 || data.next_offset!==null)) {
+      $('#results').insertAdjacentHTML('beforeend',`<nav class="sound-pagination" aria-label="Sound result pages">${offset>0?'<button type="button" id="sound-prev" class="subtle-button">← Previous words</button>':''}${data.next_offset!==null?'<button type="button" id="sound-next" class="subtle-button">More words →</button>':''}</nav>`);
+      const changePage=async next=>{await search(true,next);$('#results-panel').scrollIntoView({block:'start'});};
+      $('#sound-prev')?.addEventListener('click',()=>changePage(Math.max(0,offset-40)));
+      $('#sound-next')?.addEventListener('click',()=>changePage(data.next_offset));
+    }
     status(data.notice||'Select an entry to explore its senses and connections.');
   } catch(error) {if(seq===state.searchSeq) status(error.message,true);}
   finally {if(seq===state.searchSeq) $('#search-form button[type="submit"]').disabled=false;}
@@ -160,7 +190,7 @@ async function route() {
   updateSettings();
   if(soundModes.has($('#mode').value)||$('#pos').value!=='any')$('#advanced-panel').open=true;
   $('#obscure').checked=p.get('obscure')==='1'; $('#literary').checked=p.get('literary')==='1';
-  if(p.get('q')) await search(false);
+  if(p.get('q')) await search(false,Number(p.get('offset'))||0);
   if(p.has('entry')) {
     const id=Number(p.get('entry'));
     if(!Number.isSafeInteger(id)||id<0) return status('Invalid entry link.',true);

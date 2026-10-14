@@ -123,7 +123,8 @@ class Dictionary:
         return groups,expansions
 
     def search(self, query, mode='headword', obscure=False, literary=False, limit=40,
-               pos='any', syllables=None, stress='', pronunciation='', input_type='word'):
+               pos='any', syllables=None, stress='', pronunciation='', input_type='word', offset=0):
+        if not isinstance(offset,int) or not 0<=offset<=100000:raise ValueError('Invalid search offset')
         if pos not in POS:raise ValueError('Unknown part of speech')
         if syllables is not None and not 1<=syllables<=16:raise ValueError('Syllables must be between 1 and 16')
         if stress and not re.fullmatch(r'[012?]{1,16}',stress):raise ValueError('Stress uses 0, 1, 2 or ?, up to 16 syllables')
@@ -133,7 +134,7 @@ class Dictionary:
         if not query:
             return {'results':[], 'query':query}
         if mode in SOUND_MODES:
-            return sound_search(self,query,mode,pos,obscure,literary,syllables,stress,pronunciation,input_type,limit)
+            return sound_search(self,query,mode,pos,obscure,literary,syllables,stress,pronunciation,input_type,limit,offset)
         with self.connect() as c:
             if mode == 'headword':
                 norm = normalize(query, pattern=True)

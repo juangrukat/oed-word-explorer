@@ -2,9 +2,9 @@
   "requests": 56,
   "concurrency": 8,
   "errors": 0,
-  "median_seconds": 0.056,
-  "p95_seconds": 0.786,
-  "max_seconds": 0.947,
+  "median_seconds": 0.293,
+  "p95_seconds": 2.052,
+  "max_seconds": 2.434,
   "examples": [
     {
       "case": {
@@ -12,8 +12,8 @@
         "mode": "rhyme",
         "pos": "noun"
       },
-      "seconds": 0.062,
-      "results": 40
+      "seconds": 0.473,
+      "results": 39
     },
     {
       "case": {
@@ -22,15 +22,15 @@
         "syllables": "2",
         "stress": "10"
       },
-      "seconds": 0.072,
-      "results": 8
+      "seconds": 0.443,
+      "results": 7
     },
     {
       "case": {
         "q": "cat",
         "mode": "near-rhyme"
       },
-      "seconds": 0.843,
+      "seconds": 1.552,
       "results": 40
     },
     {
@@ -38,7 +38,7 @@
         "q": "light",
         "mode": "sounds-like"
       },
-      "seconds": 0.561,
+      "seconds": 0.573,
       "results": 40
     },
     {
@@ -46,7 +46,7 @@
         "q": "lament*",
         "pos": "verb"
       },
-      "seconds": 0.426,
+      "seconds": 0.315,
       "results": 1
     },
     {
@@ -55,7 +55,7 @@
         "mode": "definitions",
         "pos": "noun"
       },
-      "seconds": 0.947,
+      "seconds": 0.654,
       "results": 40
     },
     {
@@ -63,7 +63,7 @@
         "q": "read",
         "mode": "rhyme"
       },
-      "seconds": 0.055,
+      "seconds": 0.022,
       "results": 0
     }
   ],

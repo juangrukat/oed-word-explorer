@@ -23,6 +23,11 @@ DATA=b'''<e><hg><hw>cat</hw><pr><ph>k&t</ph></pr><ps>n.</ps></hg><s4>A feline an
 <e><hg><hw>read</hw><pr><ph>ri:d</ph></pr><ps>v.</ps></hg><s4>To interpret writing.</s4></e>
 <e><hg><hw>read</hw><pr><ph>rEd</ph></pr><ps>ppl. a.</ps></hg><s4>Interpreted.</s4></e>
 <e st=obs><hg><hw>gnat</hw><pr><ph>n&t</ph></pr><ps>n.</ps></hg><la>Poet.</la><s4>A small insect.</s4></e>
+<e><hg><hw>bat</hw><pr><ph>b&t</ph></pr><ps>n.</ps></hg><s4>A wooden striking implement.</s4></e>
+<e><hg><hw>shoe</hw><pr><ph>Su:</ph></pr><ps>n.</ps></hg><s4>A covering for the foot.</s4></e>
+<e><hg><hw>Q</hw><pr><ph>kju:</ph></pr></hg><s4>A letter of the alphabet.</s4></e>
+<e><hg><hw>cue</hw><pr><ph>kju:</ph></pr><ps>n.</ps></hg><s4>A signal to begin speaking.</s4></e>
+<e st=obs><hg><hw>bow</hw><pr><ph>bu:</ph></pr><ps>n.</ps></hg><la>north. dial.</la><s4>A stock of cattle on a farm.</s4></e>
 <e><hg><hw>unknown</hw></hg><s4>Unlabelled.</s4></e>'''
 
 class AdvancedTest(unittest.TestCase):
@@ -42,6 +47,27 @@ class AdvancedTest(unittest.TestCase):
         expected={'cat':{'bat','mat','gnat'},'light':{'night'},'nation':{'station'}}
         for word,names in expected.items():
             with self.subTest(word=word):self.assertEqual(self.names(self.dictionary.search(word,'rhyme')),names)
+    def test_grouped_rhyme_paging_and_evidence(self):
+        result=self.dictionary.search('cat','rhyme')
+        self.assertEqual(result['total'],3)
+        bat=next(x for x in result['results'] if x['headword']=='bat')
+        self.assertEqual(bat['entry_count'],2)
+        self.assertEqual(len(bat['variants']),2)
+        pages=[self.dictionary.search('cat','rhyme',limit=1,offset=i) for i in range(3)]
+        self.assertEqual({p['results'][0]['headword'] for p in pages},{'bat','gnat','mat'})
+        self.assertEqual([p['next_offset'] for p in pages],[1,2,None])
+        self.assertFalse(self.dictionary.search('cat','rhyme',offset=20)['results'])
+        with self.assertRaises(ValueError):self.dictionary.search('cat','rhyme',offset=-1)
+        shoe=self.dictionary.search('shoe','rhyme')
+        q=next(x for x in shoe['results'] if x['headword']=='Q')
+        self.assertEqual(q['phonetic_match']['homophone'],'cue')
+        self.assertEqual(q['phonetic_match']['ending'],'uː')
+        self.assertEqual(shoe['sound_summary']['ending_hint'],'long “oo” sound')
+        bow=next(x for x in shoe['results'] if x['headword']=='bow')
+        self.assertIn('Obsolete',bow['usage_labels'])
+        self.assertIn('Northern dialect',bow['usage_labels'])
+        self.assertIn('cattle',bow['definition'])
+
     def test_pos_and_combined_usage_filters(self):
         self.assertEqual(self.names(self.dictionary.search('cat','rhyme',pos='verb')),{'mat'})
         self.assertEqual(self.names(self.dictionary.search('cat','rhyme',pos='noun',obscure=True,literary=True)),{'gnat'})

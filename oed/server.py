@@ -46,7 +46,7 @@ def handler(dictionary):
                         raise ValueError('Unknown search mode')
                     self.respond(200,dictionary.search(value('q'),mode,value('obscure')=='1',value('literary')=='1',
                         pos=value('pos','any'),syllables=int(value('syllables')) if value('syllables') else None,
-                        stress=value('stress'),pronunciation=value('pronunciation'),input_type=value('input','word')))
+                        stress=value('stress'),pronunciation=value('pronunciation'),input_type=value('input','word'),offset=int(value('offset','0'))))
                 elif url.path=='/api/entry':
                     self.respond(200,dictionary.get_entry(int(value('id'))))
                 elif url.path=='/api/related':

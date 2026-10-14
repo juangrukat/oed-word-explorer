@@ -10,6 +10,8 @@ packages, Windows installation, CD mount, or external AI service after import.
 
 ![Phonetic search results in the dark blue interface](docs/advanced-search-preview.png)
 
+![Rhyme explanations with matching sounds and verified pronunciation examples](docs/rhyme-explanations-preview.png)
+
 ## Getting started
 
 Requires Python 3.10 or newer with SQLite FTS5. Tested with Python 3.14.5.
@@ -152,6 +154,11 @@ Open **Advanced search** below the main field. Choose a search method and option
 part-of-speech, literary, and historical-usage filters. Active filters remain
 visible when the panel is closed; result links preserve the search settings.
 
+- **Understandable sound results:** matching endings are highlighted beside the
+  meaning and expanded usage labels. Familiar pronunciation examples are shown
+  only when their recorded phonemes exactly match. Historical and obscure words
+  remain included; repeated spellings are grouped with their distinct matching
+  entries. Use Previous / More words to browse beyond the first 40 spellings.
 - **Exact rhymes:** match the final recorded main-stressed vowel and following
   phonemes. A single vowel nucleus is sufficient for monosyllables. Unstressed
   multisyllabic forms do not receive invented main stress.
@@ -187,7 +194,8 @@ python3 -m oed.advanced
 It is built atomically, independently of the dictionary database. The index
 report is `data/advanced.json`. Search API additionally accepts `mode=rhyme`,
 `near-rhyme`, or `sounds-like`; `pos`; `syllables`; `stress`; `input=word/ipa`;
-and a chosen `pronunciation` key returned by the API. Sound similarity uses a
+a chosen `pronunciation` key returned by the API; and `offset` for sound-result
+pages. Sound responses include grouped `variants`, `total`, and `next_offset`. Sound similarity uses a
 bounded set of the nearest indexed pronunciation keys (up to 800 keys within
 edit cost 2.05). Tight filters can therefore produce fewer approximate results;
 exact rhyme lookup uses its complete indexed ending group before the display cap.

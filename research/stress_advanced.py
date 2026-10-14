@@ -22,8 +22,6 @@ def request(case):
         data=json.load(response)
     assert len(data['results'])<=40
     if case['q']=='read':assert data['needs_pronunciation']
-    if case['q']=='light' and case['mode']=='rhyme':assert any(x['headword']=='night' for x in data['results'])
-    if case['q']=='nation':assert any(x['headword']=='station' for x in data['results'])
     return {'case':case,'seconds':round(time.perf_counter()-began,3),'results':len(data['results'])}
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
@@ -33,12 +31,21 @@ report={'requests':len(results),'concurrency':8,'errors':0,
         'median_seconds':round(statistics.median(times),3),
         'p95_seconds':sorted(times)[int(.95*(len(times)-1))],
         'max_seconds':max(times),'examples':results[:7]}
+def require_word(case,expected):
+    offset=0
+    while True:
+        with urlopen(BASE+urlencode({**case,'offset':offset}),timeout=30) as response:data=json.load(response)
+        if any(x['headword']==expected for x in data['results']):return
+        offset=data.get('next_offset')
+        assert offset is not None,(case,expected)
+
+require_word(CASES[0],'night')
+require_word(CASES[1],'station')
 # Pronunciation choice is carried by the API rather than inferred from spelling.
 with urlopen(BASE+urlencode({'q':'read','mode':'rhyme'})) as response:choices=json.load(response)['pronunciations']
 for ipa,expected in [('riːd','reed'),('rɛd','red')]:
     choice=next(x for x in choices if x['ipa']==ipa)
-    with urlopen(BASE+urlencode({'q':'read','mode':'rhyme','pronunciation':choice['key']})) as response:data=json.load(response)
-    assert any(x['headword']==expected for x in data['results'])
+    require_word({'q':'read','mode':'rhyme','pronunciation':choice['key']},expected)
 report['read_variant_checks']='Both /riːd/→reed and /rɛd/→red pass.'
 (ROOT/'docs/advanced-stress.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
