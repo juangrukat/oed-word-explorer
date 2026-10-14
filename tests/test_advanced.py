@@ -47,6 +47,26 @@ class AdvancedTest(unittest.TestCase):
         expected={'cat':{'bat','mat','gnat'},'light':{'night'},'nation':{'station'}}
         for word,names in expected.items():
             with self.subTest(word=word):self.assertEqual(self.names(self.dictionary.search(word,'rhyme')),names)
+    def test_filtered_sound_query_uses_candidate_and_entry_indexes(self):
+        from unittest.mock import patch
+        plans=[]
+        original=self.dictionary.connect
+        class Recorder:
+            def __init__(self,connection):self.connection=connection
+            def execute(self,sql,params=()):
+                if 'JOIN entries e' in sql and 'sound_candidates candidates' in sql:
+                    plans.extend(r['detail'] for r in self.connection.execute('EXPLAIN QUERY PLAN '+sql,params))
+                return self.connection.execute(sql,params)
+            def executemany(self,*args):return self.connection.executemany(*args)
+        @contextlib.contextmanager
+        def recorded():
+            with original() as connection:yield Recorder(connection)
+        with patch.object(self.dictionary,'connect',recorded):
+            self.dictionary.search('cat','rhyme',obscure=True,literary=True,syllables=1)
+        self.assertTrue(any('SEARCH p USING INDEX sounds_rhyme' in p for p in plans),plans)
+        self.assertEqual(sum('SEARCH s USING INDEX senses_entry' in p for p in plans),2,plans)
+        self.assertFalse(any('SCAN p' in p for p in plans),plans)
+
     def test_grouped_rhyme_paging_and_evidence(self):
         result=self.dictionary.search('cat','rhyme')
         self.assertEqual(result['total'],3)

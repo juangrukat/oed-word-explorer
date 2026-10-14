@@ -41,12 +41,14 @@ def sound_search(dictionary,query,mode,pos,obscure,literary,syllables,stress,pro
         c.executemany('INSERT INTO sound_candidates VALUES(?,?)',scores.items())
         pos_clause=dictionary.pos_clause('e.id',"''",pos)
         expression='coalesce(p.rhyme,p.tail)' if column=='near_key' else 'p.'+column
+        sound_index={'rhyme':'sounds_rhyme','near_key':'sounds_near','key':'sounds_key'}[column]
+        # Candidates must drive the lookup, before any correlated usage checks.
         rows=c.execute('''SELECT e.id,e.headword,e.norm,e.pos,e.homonym,e.labels,p.ipa,p.recorded,p.optional,p.key,p.rhyme,p.tail,p.syllables,p.stress,
             coalesce(p.rhyme,p.tail) AS near_key,candidates.score AS candidate_score
-            FROM advanced.sounds p JOIN sound_candidates candidates ON candidates.key='''+expression+'''
-            JOIN entries e ON e.id=p.entry_id
-            WHERE (?=0 OR EXISTS(SELECT 1 FROM senses s WHERE s.entry_id=e.id AND s.obscure=1))
-            AND (?=0 OR EXISTS(SELECT 1 FROM senses s WHERE s.entry_id=e.id AND s.literary=1))
+            FROM sound_candidates candidates CROSS JOIN advanced.sounds p INDEXED BY '''+sound_index+'''
+            CROSS JOIN entries e
+            WHERE candidates.key='''+expression+''' AND e.id=p.entry_id AND (?=0 OR EXISTS(SELECT 1 FROM senses s INDEXED BY senses_entry WHERE s.entry_id=e.id AND s.obscure=1))
+            AND (?=0 OR EXISTS(SELECT 1 FROM senses s INDEXED BY senses_entry WHERE s.entry_id=e.id AND s.literary=1))
             AND (? IS NULL OR p.syllables=?) AND (?='' OR p.stress GLOB ?)
             AND (?=0 OR candidates.score>0) AND (?='' OR e.norm!=?)
             '''+pos_clause+''' ORDER BY candidates.score,e.norm,e.id,p.key''',

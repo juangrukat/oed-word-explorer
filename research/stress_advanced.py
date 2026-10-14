@@ -13,7 +13,8 @@ CASES=[{'q':'light','mode':'rhyme','pos':'noun'},
        {'q':'nation','mode':'rhyme','syllables':'2','stress':'10'},
        {'q':'cat','mode':'near-rhyme'}, {'q':'light','mode':'sounds-like'},
        {'q':'lament*','pos':'verb'}, {'q':'poem mourning','mode':'definitions','pos':'noun'},
-       {'q':'read','mode':'rhyme'}]
+       {'q':'read','mode':'rhyme'},
+       {'q':'orange','mode':'rhyme','obscure':'1','literary':'1','syllables':'1'}]
 
 def request(case):
     began=time.perf_counter()
@@ -22,6 +23,7 @@ def request(case):
         data=json.load(response)
     assert len(data['results'])<=40
     if case['q']=='read':assert data['needs_pronunciation']
+    if case['q']=='orange':assert not data['results']
     return {'case':case,'seconds':round(time.perf_counter()-began,3),'results':len(data['results'])}
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
